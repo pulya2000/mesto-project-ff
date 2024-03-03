@@ -9,9 +9,8 @@
 // @todo: Вывести карточки на страницу
 import './pages/index.css';
 import {initialCards} from './components/cards.js';
-import {creatCard, deleteCard, isLiked} from './components/card.js';
+import {createCard, deleteCard, isLiked} from './components/card.js';
 import {openPopup, closePopup} from './components/modal.js'
-
 
 const cardList = document.querySelector('.places__list');
 
@@ -29,26 +28,26 @@ const popupAddCard = document.querySelector('.popup_type_new-card');
 const openAddCardButton = document.querySelector('.profile__add-button');
 
 //Форма редактирования профиля
-const editProfileForm = document.querySelector('.popup__form[name="edit-profile"]');
-const nameInput = document.querySelector('.popup__input[name="name"]');
-const jobInput = document.querySelector('.popup__input[name="description"]');
+const editProfileForm = document.forms['edit-profile'];
+const nameInput = editProfileForm['name'];
+const jobInput = editProfileForm['description'];
 const profileTitle = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__description');
 
 //Форма добавления карточки
-const addForm = document.querySelector('.popup__form[name="new-place"]');
-const placeInput = document.querySelector('.popup__input[name="place-name"]');
-const linkInput = document.querySelector('.popup__input[name="link"]');
+const addForm = document.forms['new-place'];
+const placeInput = addForm.elements['place-name'];
+const linkInput = addForm['link'];
 
-
+const callbacks = {deleteCard, isLiked, openImageCard}
 
 //Добавление карточек на страницу
 initialCards.forEach(item => {
-    cardList.append(creatCard(item, deleteCard, isLiked, OpenImageCard))
+    cardList.append(createCard(item, callbacks))
 });
 
 //Открытие изображения карточки
-function OpenImageCard(evt) {
+function openImageCard(evt) {
     popupImageCurrent.src = evt.target.src;
     popupImageCurrent.alt = evt.target.alt;
     popupImageCaption.textContent = evt.target.alt;
@@ -79,20 +78,18 @@ function handleEditProfileForm(evt) {
 editProfileForm.addEventListener('submit', handleEditProfileForm);
 
 //Добавление новой карточки
-function handleAddForm(evt) {
+function renderCard(evt, method = 'append') {
     evt.preventDefault();
-    const cardElement = creatCard(
+    const cardElement = createCard(
         {name: placeInput.value,
-         link: linkInput.value}, 
-        deleteCard,
-        isLiked, 
-        OpenImageCard
+        link: linkInput.value},
+        callbacks
     );
-    cardList.prepend(cardElement);
+    cardList[method = 'prepend'](cardElement);
     addForm.reset();
     closePopup(popupAddCard);
-}
+  }
 
 //Обработчик формы добавления карточки
-addForm.addEventListener('submit', handleAddForm);
+addForm.addEventListener('submit', renderCard);
 

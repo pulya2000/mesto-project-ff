@@ -1,8 +1,13 @@
 export {openPopup, closePopup};
 
+const popupIsOpened = document.querySelector('.popup_is-opened');
+
 //Открытите попапов
 function openPopup(popup) {
-    popup.classList.add('popup_is-opened', 'popup_is-animated');
+    popup.classList.add('popup_is-animated');
+    setTimeout(() => {
+        popup.classList.add('popup_is-opened');
+    }, 1);
     document.addEventListener('keydown', handleEscClose);
     popup.addEventListener('click', handleOverlayClose);
     popup.addEventListener('click', handleButtonClose);
@@ -27,15 +32,13 @@ function handleEscClose(evt) {
 //Закрытие попапов по клику на оверлей
 function handleOverlayClose(evt) {
     if (!evt.target.closest('.popup__content')) {
-        const popup = document.querySelector('.popup_is-opened');
-        closePopup(popup);
+        closePopup(evt.currentTarget);
     }
 }
 
 //Закрытие попапов по клику на крестик
 function handleButtonClose(evt) {
     if (evt.target.classList.contains('popup__close')) {
-        const popup = document.querySelector('.popup_is-opened');
-        closePopup(popup);
+        closePopup(evt.currentTarget);
     }
 }
