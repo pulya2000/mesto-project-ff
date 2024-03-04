@@ -41,6 +41,14 @@ const linkInput = addForm['link'];
 
 const callbacks = {deleteCard, isLiked, openImageCard}
 
+//Добавление карточек
+function renderCard(item, method = 'append') {
+    const cardElement = createCard(
+        item, callbacks
+    );
+    cardList[method](cardElement);
+}
+
 //Добавление карточек на страницу
 initialCards.forEach(item => renderCard(item));
 
@@ -75,15 +83,7 @@ function handleEditProfileForm(evt) {
 //Обработчик формы редактирования профиля
 editProfileForm.addEventListener('submit', handleEditProfileForm);
 
-//Добавление новой карточки
-function renderCard(item, method = 'append') {
-    const cardElement = createCard(
-        item, callbacks
-    );
-    cardList[method](cardElement);
-  }
-
-  function handleAddForm(evt) {
+function handleAddForm(evt) {
     evt.preventDefault();
     renderCard({ name: placeInput.value,
                  link: linkInput.value },
@@ -91,7 +91,7 @@ function renderCard(item, method = 'append') {
               );
     addForm.reset();
     closePopup(popupAddCard);
-  }
+}
 
 //Обработчик формы добавления карточки
 addForm.addEventListener('submit', handleAddForm);
