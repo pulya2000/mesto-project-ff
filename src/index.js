@@ -42,9 +42,7 @@ const linkInput = addForm['link'];
 const callbacks = {deleteCard, isLiked, openImageCard}
 
 //Добавление карточек на страницу
-initialCards.forEach(item => {
-    cardList.append(createCard(item, callbacks))
-});
+initialCards.forEach(item => renderCard(item));
 
 //Открытие изображения карточки
 function openImageCard(evt) {
@@ -78,18 +76,23 @@ function handleEditProfileForm(evt) {
 editProfileForm.addEventListener('submit', handleEditProfileForm);
 
 //Добавление новой карточки
-function renderCard(evt, method = 'append') {
-    evt.preventDefault();
+function renderCard(item, method = 'append') {
     const cardElement = createCard(
-        {name: placeInput.value,
-        link: linkInput.value},
-        callbacks
+        item, callbacks
     );
-    cardList[method = 'prepend'](cardElement);
+    cardList[method](cardElement);
+  }
+
+  function handleAddForm(evt) {
+    evt.preventDefault();
+    renderCard({ name: placeInput.value,
+                 link: linkInput.value },
+                 'prepend'
+              );
     addForm.reset();
     closePopup(popupAddCard);
   }
 
 //Обработчик формы добавления карточки
-addForm.addEventListener('submit', renderCard);
+addForm.addEventListener('submit', handleAddForm);
 
