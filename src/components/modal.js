@@ -42,3 +42,4 @@ function handleButtonClose(evt) {
         closePopup(evt.currentTarget);
     }
 }
+
