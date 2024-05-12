@@ -1,5 +1,5 @@
 # Проектная работа Mesto
-##Репозиторий проекта
+## Репозиторий проекта
 https://github.com/pulya2000/mesto-project-ff
-##GH Pages
+## GH Pages
 https://pulya2000.github.io/mesto-project-ff
