@@ -12,14 +12,12 @@ function deleteCard(evt, cardId) {
     openPopup(popupDelete);
     const cardForDelete = evt.target.closest('.card');
     cardDeleteAck.addEventListener('click', () => {
-        cardDeleteAck.textContent = 'Удаление...';
         deleteCardServer(cardId)
             .then(() => {
                 cardForDelete.remove();
                 closePopup(popupDelete);
             })
             .catch((err) => console.log(err))
-            .finally(cardDeleteAck.textContent = 'Да');
     })
 }
 

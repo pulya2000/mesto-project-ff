@@ -35,11 +35,6 @@ const openEditButton = document.querySelector('.profile__edit-button');
 const popupAddCard = document.querySelector('.popup_type_new-card');
 const openAddCardButton = document.querySelector('.profile__add-button');
 
-//Удаление карточки
-const popupDeleteCard = document.querySelector('.popup_type_delete');
-const cardDeleteButton = document.querySelector('.card__delete-button');
-
-
 //Форма редактирования профиля
 const editProfileForm = document.forms['edit-profile'];
 const nameInput = editProfileForm['name'];
@@ -63,6 +58,15 @@ const linkInput = addForm['link'];
 const formAddButton = addForm.querySelector('.popup__button');
 
 const callbacks = {deleteCard, likeCard, openImageCard}
+
+const data = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
+}; 
 
 //Добавление карточек
 function renderCard(item, userId, method = 'append') {
@@ -114,18 +118,14 @@ openAddCardButton.addEventListener('click', function(evt) {
     addForm.reset();
     clearValidation(addForm, data);
     openPopup(popupAddCard);
-})
+});
 
-/*cardDeleteButton.addEventListener('click', function(evt) {
-    openPopup(popupDeleteCard);
-    console.log(popupDeleteCard);
-})*/
-
+//Обработчик кнопки редактирования аватара
 openAvatarButton.addEventListener('click', function(evt) {
     clearValidation(avatarForm, data);
     openPopup(popupEditAvatar);
     avatarForm.reset();
-})
+});
 
 //Редактирование профиля
 function handleEditProfileForm(evt) {
@@ -182,15 +182,6 @@ function handleAvatarForm(evt) {
 
 //Обработчик формы редактирования аватара
 avatarForm.addEventListener('submit', handleAvatarForm);
-
-const data = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible'
-  }; 
 
 enableValidation(data);
 
