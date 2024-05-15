@@ -57,8 +57,6 @@ const placeInput = addForm.elements['place-name'];
 const linkInput = addForm['link'];
 const formAddButton = addForm.querySelector('.popup__button');
 
-const callbacks = {deleteCard, likeCard, openImageCard}
-
 const data = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
@@ -71,18 +69,14 @@ const data = {
 //Добавление карточек
 function renderCard(item, userId, method = 'append') {
     const cardElement = createCard(
-        item, callbacks, userId
+        item, openImageCard, deleteCard, likeCard, userId
     );
     cardList[method](cardElement);
 }
 
 //Показываем процесс сохранения изменений
 function renderLoading(isLoading, button) {
-        if (isLoading) {
-            button.textContent = 'Сохранение...'
-        }else {
-            button.textContent = 'Сохранить'
-        }
+    button.textContent = isLoading ? 'Сохранение...' : 'Сохранить';        
 }
 
 //Загрузка данных о пользователе и карточках с сервера
@@ -93,7 +87,8 @@ const loadCardsUsers = () =>
             profileJob.textContent = userData.about;
             profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
             cardsData.forEach(item => renderCard(item, userData._id));
-    })
+        })
+        .catch(err => console.log(err));
 
 loadCardsUsers();
 

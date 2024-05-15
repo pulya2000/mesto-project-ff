@@ -74,6 +74,7 @@ export const enableValidation = (data) => {
 export const clearValidation = (formElement, data) => {
   const inputList = Array.from(formElement.querySelectorAll(data.inputSelector));
   const buttonElement = formElement.querySelector(data.submitButtonSelector);
+  formElement.reset();
   toggleButtonState(inputList, buttonElement, data);
   inputList.forEach((inputElement) => {
     hideInputError(formElement, inputElement, data);
